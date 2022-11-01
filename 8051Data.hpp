@@ -10,6 +10,7 @@
 
 //the following function will compare the components of the string to the given arrays
 //if no match is found, error is present
+//this arrives with some exception cases of Lables and Numbers
 void checkSyntax(std::string& program) {
 
     //A vector containing all the instructions of 8051
@@ -24,7 +25,7 @@ void checkSyntax(std::string& program) {
         their bit addressability can be used in the program, it is a part 
         of an actual and correct program and has to recognized correctly
     */
-    std::vector<std::string> registers = {"A","ACC.1","ACC.2","ACC.3","ACC.4","ACC.5","ACC.6","ACC.7","B","B.0","B.1",
+    std::vector<std::string> registers = {"A","AB","ACC.1","ACC.2","ACC.3","ACC.4","ACC.5","ACC.6","ACC.7","B","B.0","B.1",
                                           "B.2","B.3","B.4","B.5","B.6","B.7","DPL","DPH","IE","IE.0","IE.1","IE.2",
                                           "IE.3","IE.4","IE.5","IE.6","IE.7","IP","IP.0","IP.1","IP.2","IP.2","IP.3",
                                           "IP.4","IP.5","IP.6","IP.7","P0","P0.0","P0.1","P0.2","P0.3","P0.4","P0.5",
@@ -35,18 +36,15 @@ void checkSyntax(std::string& program) {
                                           "SCON.3","SCON.4","SCON.5","SCON.6","SCON.7","SBUF","SP","TMOD","TCON","TCON.0",
                                           "TCON.1","TCON.2","TCON.3","TCON.4","TCON.5","TCON.6","TCON.7","TL0","TH0"};
 
+    std::string properProgram;
     std::string convertedProgram;
     std::vector<std::string> tokens;
-
-    convertedProgram = beauty::convertToUpper(program);
-    tokens = beauty::getTokens(convertedProgram);
-
-    std::string temp;
-    int j = 0;
-    for(uint_fast64_t i = 0 ; i < program.length() ; i++) {
-        if(program[i] != ' ' )
-        temp[j] = program[i];
-    }
+    std::vector<std::string> programLines;
+    
+    convertedProgram = convertToUpper(program);     //makes everything in upper case
+    programLines = tokenizeLines(convertedProgram); //contains the lines in vector form
+    properProgram = removeComments(programLines);   //contains the program in string form, without comments
+    tokens = getTokens(properProgram);              //contains all the tokens in the program
                                         
 }
 
