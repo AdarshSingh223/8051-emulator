@@ -16,7 +16,7 @@ std::string convertToUpper(std::string& program) {
 std::vector<std::string> tokenizeLines(std::string& convertedProgram){
 	
 	std::vector<std::string> tokenizedLines;
-    std::string intermediate;
+    	std::string intermediate;
 	std::stringstream check(convertedProgram);
 	
 	while(std::getline(check, intermediate, '\n'))
